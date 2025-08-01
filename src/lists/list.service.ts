@@ -5,15 +5,31 @@ import { List } from './../schemas/list.schema';
 import { Model } from 'mongoose';
 import { CreateListDto } from './dto/List.dto';
 import { UpdateListDto } from './dto/UpdateList.dto';
+import { Infantry } from 'src/schemas/Infantry.schema';
 
 @Injectable()
 export class ListService {
-  constructor(@InjectModel(List.name) private listModel: Model<List>) {}
+  constructor(
+    @InjectModel(List.name) private listModel: Model<List>,
+    @InjectModel(Infantry.name) private infantryModel: Model<Infantry>,
+  ) {}
 
-  public createList(createListDto: CreateListDto) {
-    const newList = new this.listModel(createListDto);
-    console.log('newList', newList);
-    return newList.save();
+  public async createList({ infantry, ...createListDto }: CreateListDto) {
+    const date = new Date();
+    if (infantry) {
+      infantry.createdAt = date.toISOString();
+      createListDto.createdAt = date.toISOString();
+      const newInfantry = new this.infantryModel(infantry);
+      const saveNewInfantry = await newInfantry.save();
+      const newList = new this.listModel({
+        ...createListDto,
+        settings: saveNewInfantry._id,
+      });
+      return newList.save();
+    } else {
+      const newList = new this.listModel(createListDto);
+      return newList.save();
+    }
   }
 
   public getLists() {
@@ -33,5 +49,9 @@ export class ListService {
       },
       { new: true },
     );
+  }
+
+  public deleteList(id: string) {
+    return this.listModel.findByIdAndDelete(id);
   }
 }

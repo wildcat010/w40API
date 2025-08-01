@@ -2,6 +2,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpException,
   Param,
@@ -13,6 +14,7 @@ import {
 import { ListService } from './list.service';
 import mongoose from 'mongoose';
 import { UpdateListDto } from './dto/UpdateList.dto';
+import { CreateListDto } from './dto/List.dto';
 
 @Controller('list')
 export class ListController {
@@ -20,9 +22,8 @@ export class ListController {
 
   @Post()
   @UsePipes(new ValidationPipe())
-  createList(@Body() createUserDto) {
-    console.log('dto');
-    this.listService.createList(createUserDto);
+  createList(@Body() createListDto: CreateListDto) {
+    return this.listService.createList(createListDto);
   }
 
   @Get()
@@ -58,6 +59,22 @@ export class ListController {
     const user = this.listService.updateList(id, updateListDto);
     if (user) {
       return user;
+    } else {
+      throw new HttpException('User not find', 404);
+    }
+  }
+
+  @Delete(':id')
+  async deleteList(@Param('id') id: string) {
+    const isValid = mongoose.Types.ObjectId.isValid(id);
+
+    if (!isValid) {
+      throw new HttpException('id not valid', 404);
+    }
+
+    const ListDeleted = await this.listService.deleteList(id);
+    if (ListDeleted) {
+      return ListDeleted;
     } else {
       throw new HttpException('User not find', 404);
     }
