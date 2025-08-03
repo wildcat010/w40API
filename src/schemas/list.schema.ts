@@ -5,6 +5,8 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose from 'mongoose';
 
 import { EpicHero } from './epicHero.schema';
+import { Battleline } from './battleline.schema';
+import { Character } from './character.schema';
 
 @Schema()
 export class List {
@@ -26,6 +28,20 @@ export class List {
     required: false,
   })
   epicHero?: EpicHero;
+
+  @Prop({
+    type: [{ type: mongoose.Schema.Types.ObjectId }],
+    ref: 'Battleline',
+    required: false,
+  })
+  battlelines?: Battleline[];
+
+  @Prop({
+    type: [{ type: mongoose.Schema.Types.ObjectId }],
+    ref: 'Character',
+    required: false,
+  })
+  characters?: Character[];
 }
 
 export const ListSchema = SchemaFactory.createForClass(List);

@@ -6,6 +6,8 @@ import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ListsModule } from './lists/lists.module';
 import { EpicHeroModule } from './epicHero/epicHero.module';
+import { BattlelineModule } from './battleline/battleline.module';
+import { CharacterModule } from './character/character.module';
 
 @Module({
   imports: [
@@ -14,6 +16,8 @@ import { EpicHeroModule } from './epicHero/epicHero.module';
     ),
     ListsModule,
     EpicHeroModule,
+    BattlelineModule,
+    CharacterModule,
   ],
   controllers: [],
   providers: [AppService],

@@ -1,17 +1,17 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { Types } from 'mongoose';
 import { List } from './list.schema';
+import mongoose, { Types } from 'mongoose';
 
 @Schema()
-export class Battleline {
+export class Character {
   @Prop({ required: true })
   name: string;
 
   @Prop({ required: false })
-  points: number;
+  points: string;
 
   @Prop({ required: true })
   createdAt: string;
@@ -20,4 +20,4 @@ export class Battleline {
   list?: Types.ObjectId | List; // Optional if not every EpicHero belongs to a List
 }
 
-export const BattlelineSchema = SchemaFactory.createForClass(Battleline);
+export const CharacterSchema = SchemaFactory.createForClass(Character);

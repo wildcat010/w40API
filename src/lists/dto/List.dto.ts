@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
+import { CreateBattlelineDto } from 'src/battleline/dto/battleline.dto';
+import { CreateCharacterDto } from 'src/character/dto/Character.dto';
 import { CreateEpicHeroDto } from 'src/epicHero/dto/epicHero.dto';
 
 export class CreateListInfantryDto {
@@ -45,4 +47,10 @@ export class CreateListDto {
 
   @IsOptional()
   epicHero?: CreateEpicHeroDto;
+
+  @IsOptional()
+  battlelines?: CreateBattlelineDto[];
+
+  @IsOptional()
+  characters?: CreateCharacterDto[];
 }
