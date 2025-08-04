@@ -8,6 +8,7 @@ import { ListsModule } from './lists/lists.module';
 import { EpicHeroModule } from './epicHero/epicHero.module';
 import { BattlelineModule } from './battleline/battleline.module';
 import { CharacterModule } from './character/character.module';
+import { DatasheetModule } from './datasheet/datasheet.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { CharacterModule } from './character/character.module';
     EpicHeroModule,
     BattlelineModule,
     CharacterModule,
+    DatasheetModule,
   ],
   controllers: [],
   providers: [AppService],

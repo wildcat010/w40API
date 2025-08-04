@@ -2,10 +2,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { EpicHero } from './epicHero.schema';
-import { Battleline } from './battleline.schema';
-import { Character } from './character.schema';
-import mongoose from 'mongoose';
+
+import mongoose, { Types } from 'mongoose';
 
 @Schema()
 export class Datasheet {
@@ -21,21 +19,21 @@ export class Datasheet {
   /*
     Datasheet
     */
-  @Prop({ required: true })
+  @Prop({ required: false })
   mobility: string[];
-  @Prop({ required: true })
+  @Prop({ required: false })
   toughness: string[];
-  @Prop({ required: true })
+  @Prop({ required: false })
   save: string[];
   @Prop({ required: false })
   InvSave: string[];
-  @Prop({ required: true })
+  @Prop({ required: false })
   wound: string[];
-  @Prop({ required: true })
+  @Prop({ required: false })
   lead: string[];
-  @Prop({ required: true })
+  @Prop({ required: false })
   command: string[];
-  @Prop({ required: true })
+  @Prop({ required: false })
   nameDatasheet: string[];
 
   /*
@@ -63,21 +61,23 @@ export class Datasheet {
     ref: 'EpicHero',
     required: false,
   })
-  epicHero?: EpicHero;
+  epicHero?: Types.ObjectId;
 
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Battleline',
     required: false,
   })
-  battleline?: Battleline;
+  battleline?: Types.ObjectId;
 
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Character',
     required: false,
   })
-  character?: Character;
+  character?: Types.ObjectId;
 }
+
+export type DatasheetDocument = Datasheet & Document;
 
 export const DatasheetSchema = SchemaFactory.createForClass(Datasheet);

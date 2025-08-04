@@ -44,4 +44,5 @@ export class List {
   characters?: Character[];
 }
 
+export type ListDocument = List & Document;
 export const ListSchema = SchemaFactory.createForClass(List);

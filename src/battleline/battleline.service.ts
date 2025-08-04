@@ -2,15 +2,16 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Battleline } from 'src/schemas/battleline.schema';
-import { List } from 'src/schemas/list.schema';
+import { Battleline, BattlelineDocument } from 'src/schemas/battleline.schema';
+import { List, ListDocument } from 'src/schemas/list.schema';
 import { CreateBattlelineDto } from './dto/battleline.dto';
 
 @Injectable()
 export class BattlelineService {
   constructor(
-    @InjectModel(Battleline.name) private battlelineModel: Model<Battleline>,
-    @InjectModel(List.name) private listModel: Model<List>,
+    @InjectModel(Battleline.name)
+    private battlelineModel: Model<BattlelineDocument>,
+    @InjectModel(List.name) private listModel: Model<ListDocument>,
   ) {}
   public async createBattleline(
     id: string,

@@ -6,7 +6,6 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { List, ListSchema } from './../schemas/list.schema';
 import { ListService } from './list.service';
 import { ListController } from './lists.controller';
-import { Infantry, InfantrySchema } from './../schemas/Infantry.schema';
 
 @Module({
   imports: [
@@ -14,10 +13,6 @@ import { Infantry, InfantrySchema } from './../schemas/Infantry.schema';
       {
         name: List.name,
         schema: ListSchema,
-      },
-      {
-        name: Infantry.name,
-        schema: InfantrySchema,
       },
     ]),
   ],

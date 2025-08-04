@@ -4,15 +4,15 @@ import { InjectModel } from '@nestjs/mongoose';
 
 import { Model } from 'mongoose';
 
-import { EpicHero } from './../schemas/epicHero.schema';
-import { List } from './../schemas/list.schema';
+import { EpicHero, EpicHeroDocument } from './../schemas/epicHero.schema';
+import { List, ListDocument } from './../schemas/list.schema';
 import { CreateEpicHeroDto } from './dto/epicHero.dto';
 
 @Injectable()
 export class EpicHeroService {
   constructor(
-    @InjectModel(EpicHero.name) private epicHeroModel: Model<EpicHero>,
-    @InjectModel(List.name) private listModel: Model<List>,
+    @InjectModel(EpicHero.name) private epicHeroModel: Model<EpicHeroDocument>,
+    @InjectModel(List.name) private listModel: Model<ListDocument>,
   ) {}
 
   public async createEpicHero(id: string, epicHeroDto: CreateEpicHeroDto) {

@@ -22,6 +22,46 @@ export class CreateDatasheetDto {
   nbr: number;
 
   /*
+      Datasheet
+      */
+  @IsOptional()
+  mobility: string[];
+  @IsOptional()
+  toughness: string[];
+  @IsOptional()
+  save: string[];
+  @IsOptional()
+  InvSave: string[];
+  @IsOptional()
+  wound: string[];
+  @IsOptional()
+  lead: string[];
+  @IsOptional()
+  command: string[];
+  @IsOptional()
+  nameDatasheet: string[];
+
+  /*
+      Wargear
+      */
+  @IsOptional()
+  wargearName: string[];
+  @IsOptional()
+  wargearRange: string[];
+  @IsOptional()
+  wargearType: string[];
+  @IsOptional()
+  wargearAttack: string[];
+  @IsOptional()
+  wargearSkill: string[];
+  @IsOptional()
+  wargearStrength: string[];
+  @IsOptional()
+  wargearAP: string[];
+  @IsOptional()
+  wargearDammage: string[];
+
+  /*
     Relationship
   */
   @IsOptional()
