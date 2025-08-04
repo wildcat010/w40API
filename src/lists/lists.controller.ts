@@ -34,7 +34,7 @@ export class ListController {
   @Get(':id')
   async getListById(@Param('id') id: string) {
     const isValid = mongoose.Types.ObjectId.isValid(id);
-    console.log(id);
+
     if (!isValid) {
       throw new HttpException('id not valid', 404);
     }
@@ -49,13 +49,12 @@ export class ListController {
   @Patch(':id')
   @UsePipes(new ValidationPipe())
   updateUser(@Param('id') id: string, @Body() updateListDto: UpdateListDto) {
-    console.log(id);
     const isValid = mongoose.Types.ObjectId.isValid(id);
-    console.log(id);
+
     if (!isValid) {
       throw new HttpException('id not valid', 404);
     }
-    console.log(updateListDto);
+
     const user = this.listService.updateList(id, updateListDto);
     if (user) {
       return user;

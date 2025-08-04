@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import { Body, Controller, Post, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Post, Query } from '@nestjs/common';
 
 import { DatasheetService } from './datasheet.service';
 import { CreateDatasheetDto } from './dto/datasheet.dto';
@@ -17,5 +17,10 @@ export class DatasheetController {
     @Body() createDatasheetDto: CreateDatasheetDto,
   ) {
     return this.datasheetService.createDatasheet(id, model, createDatasheetDto);
+  }
+
+  @Delete()
+  deleteDatasheet(@Query('id') id: string) {
+    return this.datasheetService.deleteDatasheet(id);
   }
 }

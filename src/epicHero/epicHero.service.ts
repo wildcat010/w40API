@@ -16,10 +16,7 @@ export class EpicHeroService {
   ) {}
 
   public async createEpicHero(id: string, epicHeroDto: CreateEpicHeroDto) {
-    console.log(`id ${id}, epicHero ${JSON.stringify(epicHeroDto)}`);
-
     const list = await this.listModel.findById(id);
-    console.log(`list ${JSON.stringify(list)}`);
 
     if (!list) {
       throw new Error(`List with ID ${id} not found`);
@@ -36,15 +33,12 @@ export class EpicHeroService {
       throw new Error('EpicHero could not be saved');
     }
 
-    const updatedList = await this.listModel.findByIdAndUpdate(
+    await this.listModel.findByIdAndUpdate(
       id,
       { epicHero: savedHero._id },
       { new: true },
     );
 
-    console.log(`updatedList ${JSON.stringify(updatedList)}`);
-
-    // ✅ Populate list field before returning
     const populatedHero = await this.epicHeroModel
       .findById(savedHero._id)
       .populate('list');
@@ -54,5 +48,17 @@ export class EpicHeroService {
 
   public async getEpicHeros() {
     return this.epicHeroModel.find().populate('list');
+  }
+
+  public async deleteEpicHero(id: string) {
+    const deletedItem = await this.epicHeroModel.findByIdAndDelete(id);
+    if (deletedItem) {
+      const listId = deletedItem.list;
+      return await this.listModel.findByIdAndUpdate(
+        listId,
+        { $unset: { epicHero: deletedItem._id } },
+        { new: true },
+      );
+    }
   }
 }

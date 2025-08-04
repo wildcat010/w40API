@@ -32,7 +32,6 @@ export class DatasheetService {
     createDatasheetDto: CreateDatasheetDto,
   ) {
     const result = await this.getModel(id, model);
-    console.log(`result ${result}`);
 
     if (result) {
       const date = new Date();
@@ -42,11 +41,10 @@ export class DatasheetService {
       ) {
         createDatasheetDto[model] = result._id.toString();
       }
-      console.log(`createDatasheetDto ${JSON.stringify(createDatasheetDto)}`);
+
       const savedDatasheet =
         await this.datasheetModel.create(createDatasheetDto);
 
-      console.log(`savedDatasheet ${JSON.stringify(savedDatasheet)}`);
       if (savedDatasheet) {
         switch (model) {
           case 'epicHero':
@@ -56,7 +54,7 @@ export class DatasheetService {
               { new: true },
             );
             return await savedDatasheet?.populate('epicHero');
-            break;
+
           case 'character':
             await this.characterModel.findByIdAndUpdate(
               id,
@@ -64,7 +62,7 @@ export class DatasheetService {
               { new: true },
             );
             return await savedDatasheet?.populate('character');
-            break;
+
           case 'battleline':
             await this.battlelineModel.findByIdAndUpdate(
               id,
@@ -72,7 +70,63 @@ export class DatasheetService {
               { new: true },
             );
             return await savedDatasheet?.populate('battleline');
+        }
+      }
+    }
+  }
+
+  public async deleteDatasheet(id: string) {
+    //const deletedItem = await this.datasheetModel.findById(id);
+    const deletedItem = await this.datasheetModel.findByIdAndDelete(id);
+
+    if (deletedItem) {
+      let objFind: any = null;
+
+      for (const model of this.validModels) {
+        console.log('model', model);
+        let endloop: number = 0;
+        switch (model) {
+          case 'epicHero':
+            objFind = await this.epicHeroModel.findById(deletedItem.epicHero);
+            if (objFind) {
+              endloop = 1;
+              console.log('epic hero delete');
+              return await this.epicHeroModel.findByIdAndUpdate(
+                objFind._id,
+                { $unset: { datasheet: '' } },
+                { new: true },
+              );
+            }
             break;
+          case 'character':
+            objFind = await this.characterModel.findById(deletedItem.character);
+            if (objFind) {
+              endloop = 1;
+              console.log('character delete');
+              return await this.characterModel.findByIdAndUpdate(
+                objFind._id,
+                { $pull: { datasheets: deletedItem._id } },
+                { new: true },
+              );
+            }
+            break;
+          case 'battleline':
+            objFind = await this.battlelineModel.findById(
+              deletedItem.battleline,
+            );
+            if (objFind) {
+              endloop = 1;
+              console.log('battleline delete');
+              return await this.battlelineModel.findByIdAndUpdate(
+                objFind._id,
+                { $pull: { datasheets: deletedItem._id } },
+                { new: true },
+              );
+            }
+            break;
+        }
+        if (endloop === 1) {
+          break;
         }
       }
     }
@@ -85,15 +139,12 @@ export class DatasheetService {
 
     switch (model) {
       case 'epicHero':
-        console.log('epicHero');
         obj = await this.epicHeroModel.findById(objectId);
         break;
       case 'character':
-        console.log('character');
         obj = await this.characterModel.findById(objectId);
         break;
       case 'battleline':
-        console.log('battleline');
         obj = await this.battlelineModel.findById(objectId);
         break;
     }

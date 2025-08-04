@@ -4,6 +4,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpException,
   Param,
@@ -36,5 +37,10 @@ export class EpicHeroController {
   @Get()
   getEpicHeroes() {
     return this.epicHeroService.getEpicHeros();
+  }
+
+  @Delete(':id')
+  deleteEpicHero(@Param('id') id: string) {
+    return this.epicHeroService.deleteEpicHero(id);
   }
 }
