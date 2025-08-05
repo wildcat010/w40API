@@ -47,7 +47,11 @@ export class EpicHeroService {
   }
 
   public async getEpicHeros() {
-    return this.epicHeroModel.find().populate('list');
+    return await this.epicHeroModel.find().populate('list');
+  }
+
+  public async getEpicHeroById(id: string) {
+    return await this.epicHeroModel.findById(id);
   }
 
   public async deleteEpicHero(id: string) {

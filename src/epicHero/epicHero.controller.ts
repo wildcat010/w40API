@@ -39,6 +39,11 @@ export class EpicHeroController {
     return this.epicHeroService.getEpicHeros();
   }
 
+  @Get(':id')
+  getEpicHeroById(@Param('id') id: string) {
+    return this.epicHeroService.getEpicHeroById(id);
+  }
+
   @Delete(':id')
   deleteEpicHero(@Param('id') id: string) {
     return this.epicHeroService.deleteEpicHero(id);

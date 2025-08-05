@@ -154,4 +154,12 @@ export class DatasheetService {
       return null;
     }
   }
+
+  public async getDatasheets() {
+    return await this.datasheetModel.find();
+  }
+
+  public async getDatasheetById(id: string) {
+    return await this.datasheetModel.findById(id);
+  }
 }
