@@ -83,14 +83,13 @@ export class DatasheetService {
       let objFind: any = null;
 
       for (const model of this.validModels) {
-        console.log('model', model);
         let endloop: number = 0;
         switch (model) {
           case 'epicHero':
             objFind = await this.epicHeroModel.findById(deletedItem.epicHero);
             if (objFind) {
               endloop = 1;
-              console.log('epic hero delete');
+
               return await this.epicHeroModel.findByIdAndUpdate(
                 objFind._id,
                 { $unset: { datasheet: '' } },
@@ -102,7 +101,7 @@ export class DatasheetService {
             objFind = await this.characterModel.findById(deletedItem.character);
             if (objFind) {
               endloop = 1;
-              console.log('character delete');
+
               return await this.characterModel.findByIdAndUpdate(
                 objFind._id,
                 { $pull: { datasheets: deletedItem._id } },
@@ -116,7 +115,7 @@ export class DatasheetService {
             );
             if (objFind) {
               endloop = 1;
-              console.log('battleline delete');
+
               return await this.battlelineModel.findByIdAndUpdate(
                 objFind._id,
                 { $pull: { datasheets: deletedItem._id } },
