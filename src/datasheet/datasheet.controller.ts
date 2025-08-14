@@ -6,6 +6,7 @@ import {
   Controller,
   Delete,
   Get,
+  HttpException,
   Param,
   Post,
   Query,
@@ -24,6 +25,12 @@ export class DatasheetController {
     @Query('model') model: string,
     @Body() createDatasheetDto: CreateDatasheetDto,
   ) {
+    if (!id) {
+      throw new HttpException('id not valid', 404);
+    }
+    if (!model) {
+      throw new HttpException('model not valid', 404);
+    }
     return this.datasheetService.createDatasheet(id, model, createDatasheetDto);
   }
 
