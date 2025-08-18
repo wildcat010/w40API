@@ -34,7 +34,7 @@ export class Datasheet {
   @Prop({ required: false })
   command: string[];
   @Prop({ required: false })
-  nameDatasheet: string[];
+  nameDatasheet: string;
 
   /*
     Wargear

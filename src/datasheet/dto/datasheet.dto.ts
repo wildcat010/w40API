@@ -39,7 +39,7 @@ export class CreateDatasheetDto {
   @IsOptional()
   command: string[];
   @IsOptional()
-  nameDatasheet: string[];
+  nameDatasheet: string;
 
   /*
       Wargear
