@@ -20,11 +20,19 @@ export class ListService {
   }
 
   public getLists() {
-    return this.listModel.find();
+    return this.listModel
+      .find()
+      .populate('characters')
+      .populate('battlelines')
+      .populate('epicheros');
   }
 
   public getListById(id: string) {
-    return this.listModel.findById(id);
+    return this.listModel
+      .findById(id)
+      .populate('characters')
+      .populate('battlelines')
+      .populate('epicheros');
   }
 
   public updateList(id: string, updateListDto: UpdateListDto) {
