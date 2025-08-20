@@ -32,7 +32,7 @@ export class CharacterController {
       throw new HttpException('id not valid', 404);
     }
 
-    return this.characterService.createBattleline(id, createCharacterDto);
+    return this.characterService.createCharacter(id, createCharacterDto);
   }
 
   @Get()

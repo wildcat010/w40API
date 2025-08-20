@@ -16,7 +16,7 @@ export class CharacterService {
     @InjectModel(List.name) private listModel: Model<ListDocument>,
   ) {}
 
-  public async createBattleline(
+  public async createCharacter(
     id: string,
     createCharacter: CreateCharacterDto,
   ) {
