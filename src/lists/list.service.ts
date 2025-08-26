@@ -24,10 +24,7 @@ export class ListService {
   }
 
   public getListById(id: string) {
-    return this.listModel
-      .findById(id)
-      .populate('characters')
-      .populate('datasheets');
+    return this.listModel.findById(id).populate('characters');
   }
 
   public updateList(id: string, updateListDto: UpdateListDto) {
