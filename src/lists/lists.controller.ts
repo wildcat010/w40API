@@ -15,23 +15,31 @@ import { ListService } from './list.service';
 import mongoose from 'mongoose';
 import { UpdateListDto } from './dto/UpdateList.dto';
 import { CreateListDto } from './dto/List.dto';
+import { ApiTags, ApiOperation, ApiResponse, ApiParam } from '@nestjs/swagger';
 
+@ApiTags('list')
 @Controller('list')
 export class ListController {
   constructor(private listService: ListService) {}
 
   @Post()
   @UsePipes(new ValidationPipe())
+  @ApiOperation({ summary: 'Create a list' })
+  @ApiResponse({ status: 201, description: 'The list has been created.' })
   createList(@Body() createListDto: CreateListDto) {
     return this.listService.createList(createListDto);
   }
 
   @Get()
+  @ApiOperation({ summary: 'Get all the users' })
+  @ApiResponse({ status: 201, description: 'Return lists.' })
   getLists() {
     return this.listService.getLists();
   }
 
   @Get(':id')
+  @ApiOperation({ summary: 'Get a list by id' })
+  @ApiResponse({ status: 201, description: 'Return list.' })
   async getListById(@Param('id') id: string) {
     const isValid = mongoose.Types.ObjectId.isValid(id);
 
@@ -48,6 +56,8 @@ export class ListController {
 
   @Patch(':id')
   @UsePipes(new ValidationPipe())
+  @ApiOperation({ summary: 'Get a list by ID' })
+  @ApiParam({ name: 'id', type: Number, description: 'List ID' })
   updateUser(@Param('id') id: string, @Body() updateListDto: UpdateListDto) {
     const isValid = mongoose.Types.ObjectId.isValid(id);
 
@@ -64,6 +74,8 @@ export class ListController {
   }
 
   @Delete(':id')
+  @ApiOperation({ summary: 'Delete a list by ID' })
+  @ApiParam({ name: 'id', type: Number, description: 'List ID' })
   async deleteList(@Param('id') id: string) {
     const isValid = mongoose.Types.ObjectId.isValid(id);
 
