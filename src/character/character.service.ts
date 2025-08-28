@@ -48,9 +48,8 @@ export class CharacterService {
   }
 
   public async deleteCharacter(id: string) {
-    const deletedItem = await this.characterModel
-      .findByIdAndDelete(id)
-      .populate('datasheet');
+    const deletedItem = await this.characterModel.findByIdAndDelete(id);
+
     if (deletedItem) {
       const listId = deletedItem.list;
       await this.listModel.findByIdAndUpdate(
