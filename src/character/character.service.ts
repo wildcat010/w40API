@@ -48,14 +48,17 @@ export class CharacterService {
   }
 
   public async deleteCharacter(id: string) {
-    const deletedItem = await this.characterModel.findByIdAndDelete(id);
+    const deletedItem = await this.characterModel
+      .findByIdAndDelete(id)
+      .populate('datasheet');
     if (deletedItem) {
       const listId = deletedItem.list;
-      return await this.listModel.findByIdAndUpdate(
+      await this.listModel.findByIdAndUpdate(
         listId,
         { $pull: { characters: deletedItem._id } },
         { new: true },
       );
+      return deletedItem;
     }
   }
 }
