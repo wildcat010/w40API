@@ -24,7 +24,11 @@ export class ListService {
   }
 
   public getListById(id: string) {
-    return this.listModel.findById(id).populate('characters');
+    return this.listModel
+      .findById(id)
+      .populate('characters')
+      .populate('battlelines')
+      .populate('epicHero');
   }
 
   public updateList(id: string, updateListDto: UpdateListDto) {

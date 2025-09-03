@@ -14,6 +14,9 @@ export class Battleline {
   @Prop({ required: false })
   points: number;
 
+  @Prop({ required: false })
+  nbr: number;
+
   @Prop({ required: true })
   createdAt: string;
 

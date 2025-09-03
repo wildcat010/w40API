@@ -48,11 +48,13 @@ export class BattlelineService {
     const deletedItem = await this.battlelineModel.findByIdAndDelete(id);
     if (deletedItem) {
       const listId = deletedItem.list;
-      return await this.listModel.findByIdAndUpdate(
+      await this.listModel.findByIdAndUpdate(
         listId,
         { $pull: { battlelines: deletedItem._id } },
         { new: true },
       );
+
+      return deletedItem;
     }
   }
 }

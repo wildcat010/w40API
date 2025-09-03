@@ -58,11 +58,12 @@ export class EpicHeroService {
     const deletedItem = await this.epicHeroModel.findByIdAndDelete(id);
     if (deletedItem) {
       const listId = deletedItem.list;
-      return await this.listModel.findByIdAndUpdate(
+      await this.listModel.findByIdAndUpdate(
         listId,
         { $unset: { epicHero: deletedItem._id } },
         { new: true },
       );
+      return deletedItem;
     }
   }
 }

@@ -17,6 +17,10 @@ export class UpdateBattlelineDto {
   @IsNumber()
   points: number;
 
+  @IsNotEmpty()
+  @IsNumber()
+  nbr: number;
+
   @IsOptional()
   @IsMongoId()
   list?: string | Types.ObjectId; // ID of the related List
