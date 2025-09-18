@@ -26,9 +26,18 @@ export class ListService {
   public getListById(id: string) {
     return this.listModel
       .findById(id)
-      .populate('characters')
-      .populate('battlelines')
-      .populate('epicHero');
+      .populate({
+        path: 'characters',
+        populate: { path: 'datasheets' },
+      })
+      .populate({
+        path: 'battlelines',
+        populate: { path: 'datasheets' },
+      })
+      .populate({
+        path: 'epicHero',
+        populate: { path: 'datasheets' },
+      });
   }
 
   public updateList(id: string, updateListDto: UpdateListDto) {
