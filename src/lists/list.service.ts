@@ -36,7 +36,7 @@ export class ListService {
       })
       .populate({
         path: 'epicHero',
-        populate: { path: 'datasheets' },
+        populate: { path: 'datasheet' },
       });
   }
 
